@@ -67,6 +67,8 @@ _xpu_computation_op_list = [
     "copy",
     "cumprod",
     "cumsum",
+    "cummax",
+    "cummin",
     "equal",
     "eq",
     "exp",
@@ -100,6 +102,7 @@ _xpu_computation_op_list = [
     "log2",
     "logaddexp",
     "logaddexp2",
+    "logcumsumexp",
     "logit",
     "lt",
     "logical_and",
@@ -285,6 +288,7 @@ _xpu_computation_op_list = [
     "log_normal",
     "take",
     "put",
+    "_segment_reduce",
 ]
 
 _ops_without_cuda_support = [
@@ -302,7 +306,6 @@ _cuda_xfail_xpu_pass = [
     ("_batch_norm_with_update", "test_noncontiguous_samples"),
     ("_batch_norm_with_update", "test_dispatch_symbolic_meta_outplace_all_strides"),
     ("histc", "test_out"),
-    ("logcumsumexp", "test_out_warning"),
     ("_refs.mul", "test_python_ref"),
     ("_refs.mul", "test_python_ref_torch_fallback"),
     ("nn.AvgPool2d", "test_memory_format"),
