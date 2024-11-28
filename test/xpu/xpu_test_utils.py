@@ -131,6 +131,7 @@ _xpu_computation_op_list = [
     "nn.functional.hardsigmoid",
     "nn.functional.softplus",
     "nn.functional.softshrink",
+    "nn.functional.local_response_norm",
     "nextafter",
     "heaviside",
     "nonzero",
@@ -201,6 +202,7 @@ _xpu_computation_op_list = [
     "nn.functional.max_pool3d",
     "nn.functional.adaptive_avg_pool2d",
     "nn.functional.adaptive_avg_pool3d",
+    "nn.functional.avg_pool1d",
     "nn.functional.avg_pool2d",
     "nn.functional.avg_pool3d",
     "nn.functional.embedding",
@@ -961,6 +963,7 @@ class XPUPatchForImport:
         ]
         common_cuda.TEST_CUDA = True
         common_cuda.TEST_CUDNN = True
+        common_cuda.TEST_CUDNN_VERSION = 0
         cuda.is_available = lambda: True
         cuda.is_bf16_supported = lambda: True
 
