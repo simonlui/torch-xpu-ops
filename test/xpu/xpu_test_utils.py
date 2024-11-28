@@ -1039,13 +1039,22 @@ def launch_test(test_case, skip_list=None, exe_list=None):
         for skip_case in skip_list[1:]:
             skip_option = " and not " + skip_case
             skip_options += skip_option
-        test_command = ["-k", skip_options, "-n", "1", test_case, "-v"]
+        if test_case == "test_dataloader_xpu.py":
+            test_command = ["-k", skip_options, "-n", "1", test_case, "-v"]
+        else:
+            test_command = ["-k", skip_options, test_case, "-v"]
     elif exe_list != None:
         exe_options = exe_list[0]
         for exe_case in exe_list[1:]:
             exe_option = " or " + exe_case
             exe_options += exe_option
-        test_command = ["-k", exe_options, "-n", "1", test_case, "-v"]
+        if test_case == "test_dataloader_xpu.py":
+            test_command = ["-k", exe_options, "-n", "1", test_case, "-v"]
+        else:
+            test_command = ["-k", exe_options, test_case, "-v"]
     else:
-        test_command = ["-n", "1", test_case, "-v"]
+        if test_case == "test_dataloader_xpu.py":
+            test_command = ["-n", "1", test_case, "-v"]
+        else:
+            test_command = [test_case, "-v"]
     return pytest.main(test_command)
