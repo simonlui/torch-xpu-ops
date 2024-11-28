@@ -1047,5 +1047,5 @@ def launch_test(test_case, skip_list=None, exe_list=None):
             exe_options += exe_option
         test_command = ["-k", exe_options, "-n", "1", test_case, "-v"]
     else:
-        test_command = ["-n", "1"， test_case, "-v"]
+        test_command = ["-n", "1", test_case, "-v"]
     return pytest.main(test_command)
