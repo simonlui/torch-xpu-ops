@@ -67,7 +67,6 @@ concurrency:
 
 jobs:
   Linux-Nightly-Ondemand-UT-Tests-Rolling:
-    if: github.event_name == 'schedule' || ${{ inputs.ut_suite }}
     uses: ./.github/workflows/_linux_ut.yml
     with:
       keep_torch_xpu_ops: ${{ github.event_name == 'schedule' && 'false' || inputs.keep_torch_xpu_ops }}
@@ -78,7 +77,6 @@ jobs:
       runner: pvc_rolling
 
   Linux-Weekly-UT-Tests-ABI-0-Rolling:
-    if: github.event_name == 'schedule' && github.event.schedule == '30 16 * * 5'
     uses: ./.github/workflows/_linux_ut.yml
     with:
       abi: 0
@@ -93,7 +91,7 @@ jobs:
     runs-on: pvc_rolling
     # Don't run on forked repos
     if: github.repository_owner == 'intel'
-    timeout-minutes: 3600
+    timeout-minutes: 36000
     env:
       pytorch: ${{ github.event_name == 'schedule' && 'main' || inputs.pytorch }}
       keep_torch_xpu_ops: ${{ github.event_name == 'schedule' && 'false' || inputs.keep_torch_xpu_ops }}
@@ -182,6 +180,7 @@ jobs:
         run: |
           source activate e2e_ci
           source .github/scripts/env.sh
+          export _GLIBCXX_USE_CXX11_ABI=0
           cd ../pytorch
           pip install -r requirements.txt
           export CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:${CONDA_PREFIX:-"$(dirname $(which conda))/../"}
