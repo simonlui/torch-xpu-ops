@@ -25,4 +25,18 @@ Tensor& _fft_c2c_xpu_out(
   return native::xpu::_fft_c2c_mkl_out(self, dim, normalization, forward, out);
 }
 
+Tensor _fft_c2r_xpu(
+    const Tensor& self,
+    IntArrayRef dim,
+    int64_t normalization,
+    int64_t last_dim_size) {
+  TORCH_CHECK(self.is_complex());
+
+  if (dim.empty()) {
+    return self.clone();
+  }
+
+  return native::xpu::_fft_c2r_mkl(self, dim, normalization, last_dim_size);
+}
+
 } // namespace at::native
