@@ -422,7 +422,7 @@ Tensor _fft_c2r_mkl(
         c2c_dims,
         static_cast<int64_t>(fft_norm_mode::none),
         /*forward=*/false);
-    dim = dim.slice(dim.size() - 1);
+    //dim = dim.slice(dim.size() - 1);
   }
 
   // auto in_sizes = input.sizes();
@@ -437,7 +437,7 @@ Tensor _fft_c2r_mkl(
       out,
       input,
       out_sizes,
-      dim,
+      dim.back(),//dim,
       /*onesided=*/true,
       /*forward=*/false);
 
