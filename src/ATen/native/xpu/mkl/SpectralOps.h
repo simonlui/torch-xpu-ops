@@ -21,7 +21,7 @@ TORCH_XPU_API Tensor _fft_c2r_mkl(
     int64_t normalization,
     int64_t last_dim_size);
 
-TORCH_XPU_API Tensor _fft_c2r_mkl_out(
+TORCH_XPU_API Tensor& _fft_c2r_mkl_out(
     const Tensor& self,
     IntArrayRef dim,
     int64_t normalization,
