@@ -106,7 +106,7 @@ jobs:
           source activate e2e_ci
           source .github/scripts/env.sh
           cd ../ && rm -rf pytorch
-          git clone https://github.com/pytorch/pytorch pytorch
+          git clone https://github.com/mengfei25/pytorch pytorch
           cd pytorch && git checkout $(echo ${{ env.pytorch }} |sed 's/^nightly_wheel$/nightly/')
           # apply PRs for stock pytorch
           pip install requests
