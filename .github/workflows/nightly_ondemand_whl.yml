@@ -115,6 +115,7 @@ jobs:
           pip install -r requirements.txt
           cd ../
           pip install torch torchvision torchaudio --pre --index-url https://download.pytorch.org/whl/nightly/xpu
+          pip install -r .ci/docker/requirements-ci.txt
       - name: Identify pinned versions
         id: pinned
         run: |
@@ -124,7 +125,7 @@ jobs:
           echo "TRITON_COMMIT_ID=$(pip list |grep -w pytorch-triton-xpu |awk '{print $2}')" |tee -a "${GITHUB_OUTPUT}" >> "${GITHUB_ENV}"
           echo "TORCH_BRANCH_ID=nightly" |tee -a "${GITHUB_OUTPUT}" >> "${GITHUB_ENV}"
           echo "TORCH_COMMIT_ID=$(pip list |grep -w torch |awk '{print $2}')" |tee -a "${GITHUB_OUTPUT}" >> "${GITHUB_ENV}"
-          echo "TORCHBENCH_COMMIT_ID=$(<third_party/torch-xpu-ops/.github/ci_commit_pins/torchbench.txt)" |tee -a "${GITHUB_OUTPUT}" >> "${GITHUB_ENV}"
+          echo "TORCHBENCH_COMMIT_ID=$(<.github/ci_commit_pins/torchbench.txt)" |tee -a "${GITHUB_OUTPUT}" >> "${GITHUB_ENV}"
           echo "TORCHVISION_COMMIT_ID=$(pip list |grep -w torchvision |awk '{print $2}')" |tee -a "${GITHUB_OUTPUT}" >> "${GITHUB_ENV}"
           echo "TORCHAUDIO_COMMIT_ID=$(pip list |grep -w torchaudio |awk '{print $2}')" |tee -a "${GITHUB_OUTPUT}" >> "${GITHUB_ENV}"
           echo "TRANSFORMERS_VERSION=$(<.ci/docker/ci_commit_pins/huggingface.txt)" |tee -a "${GITHUB_OUTPUT}" >> "${GITHUB_ENV}"
