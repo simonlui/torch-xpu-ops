@@ -15,8 +15,6 @@ parser.add_argument('--pr-list', '-n', nargs='+',
         "https://github.com/pytorch/pytorch/pull/143739",
         # [XPU] Update XPU C Shim Header
         "https://github.com/pytorch/pytorch/pull/141086",
-        # Update torch-xpu-ops commit pin
-        "https://github.com/pytorch/pytorch/pull/143984",
     ]
 )
 parser.add_argument('--extra-pr-list', '-e', nargs='+',default=[])
