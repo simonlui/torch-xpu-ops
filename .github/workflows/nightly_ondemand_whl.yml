@@ -63,10 +63,10 @@ jobs:
       ut: ${{ github.event_name == 'schedule' && 'op_regression,op_regression_dev1,op_extended,op_ut,torch_xpu' || inputs.ut }}
       python: ${{ github.event_name == 'schedule' && '3.10' || inputs.python }}
       pytorch: nightly_wheel
-      runner: linux.idc.xpu
+      runner: e2e_internal
 
   Linux-Nightly-Ondemand-E2E-WHL-Tests:
-    runs-on: pvc_e2e
+    runs-on: e2e_internal
     # Don't run on forked repos
     if: github.repository_owner == 'intel'
     timeout-minutes: 36000
@@ -94,16 +94,15 @@ jobs:
         uses: actions/checkout@v4
       - name: Prepare Conda ENV
         run: |
-          which conda && conda clean -ay
-          conda remove --all -y -n e2e_ci || rm -rf $(dirname ${CONDA_EXE})/../envs/e2e_ci
-          conda create -n e2e_ci python=${{ env.python }} cmake ninja -y
-          source activate e2e_ci
+          rm -rf ${HOME}/myvenv-e2e
+          /usr/bin/python3.10 -m venv ${HOME}/myvenv-e2e
+          source ${HOME}/myvenv-e2e/bin/activate
           pip install mkl-static==2025.0.1 mkl-include==2025.0.1
           pip install pandas scipy tqdm
       - name: Prepare Stock Pytorch
         run: |
           pwd
-          source activate e2e_ci
+          source ${HOME}/myvenv-e2e/bin/activate
           source .github/scripts/env.sh
           cd ../ && rm -rf pytorch
           git clone https://github.com/pytorch/pytorch pytorch
@@ -118,7 +117,7 @@ jobs:
       - name: Identify pinned versions
         id: pinned
         run: |
-          source activate e2e_ci
+          source ${HOME}/myvenv-e2e/bin/activate
           source .github/scripts/env.sh
           cd ../pytorch
           echo "TRITON_COMMIT_ID=$(pip list |grep -w pytorch-triton-xpu |awk '{print $2}')" |tee -a "${GITHUB_OUTPUT}" >> "${GITHUB_ENV}"
