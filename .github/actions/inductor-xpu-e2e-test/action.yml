@@ -53,7 +53,7 @@ runs:
         source ${HOME}/myvenv-e2e/bin/activate
         source .github/scripts/env.sh
         if [[ ${{ inputs.suite }} == *"torchbench"* ]]; then
-          if [ "${{ inputs.pytorch }}" != "nightly_wheel" ]; then
+          if [ "${{ inputs.pytorch }}" != "" ]; then
             cd ../ && rm -rf audio && git clone --single-branch -b main https://github.com/pytorch/audio.git
             cd audio && git checkout $TORCHAUDIO_COMMIT_ID
             python setup.py bdist_wheel && pip uninstall torchaudio -y && pip install dist/*.whl
