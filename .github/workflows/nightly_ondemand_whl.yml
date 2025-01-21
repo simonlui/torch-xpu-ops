@@ -113,6 +113,7 @@ jobs:
           git status && git show -s
           pip install -r requirements.txt
           TRITON_REPO="https://github.com/intel/intel-xpu-backend-for-triton"
+          TRITON_COMMIT_ID=$(<.ci/docker/ci_commit_pins/triton-xpu.txt)
           echo ${TRITON_REPO}@${TRITON_COMMIT_ID}
           pip install --force-reinstall "git+${TRITON_REPO}@${TRITON_COMMIT_ID}#subdirectory=python"
           cd ../
